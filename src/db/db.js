@@ -1,9 +1,11 @@
+// Import the openDB function from the idb library
 import { openDB } from "idb";
 
+// Define constants for the database name and store name
 const DB_NAME = "offline-data";
-
 const STORE_NAME = "requests";
 
+// Initialize the database
 export const initDB = async () => {
   return openDB(DB_NAME, 1, {
     upgrade(db) {
@@ -17,20 +19,9 @@ export const initDB = async () => {
   });
 };
 
+// Add a request to the database
 export const addRequest = async (request) => {
   const db = await initDB();
- console.log('add request',request);
   await db.add(STORE_NAME, request);
 };
 
-export const getAllRequests = async () => {
-  const db = await initDB();
-  
-  return await db.getAll(STORE_NAME);
-};
-
-export const clearRequests = async () => {
-  const db = await initDB();
-
-  await db.clear(STORE_NAME);
-};
